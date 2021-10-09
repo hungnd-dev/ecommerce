@@ -26,5 +26,10 @@ public class ConfigInfo {
     public static final String ELASTICSEARCH_CLUSTER_HOST = config.getString("elastic.cluster.url");
     public static final int ELASTICSEARCH_CLUSTER_PORT = config.getInt("elastic.cluster.port");
     public static final String ELASTICSEARCH_CLUSTER_INDEX = config.getString("elastic.cluster.index");
+    //------------------------------------------------------------------------------------------------
+
+    public static final String USER_TABLE_NAME =config.getString("schema.table.user");
+    //-----------------------------------------------------------------------------------------------
+    public static final String SECRET =config.getString("secret");
 
 }

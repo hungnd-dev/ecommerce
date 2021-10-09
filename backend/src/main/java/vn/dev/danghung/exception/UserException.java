@@ -1,9 +1,9 @@
 package vn.dev.danghung.exception;
 
-public class EmployeeException extends Exception {
+public class UserException extends Exception {
     private int code;
 
-    public EmployeeException(String message, int code) {
+    public UserException(String message, int code) {
         super(message);
         this.code = code;
     }
