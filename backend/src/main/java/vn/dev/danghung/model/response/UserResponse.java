@@ -17,6 +17,10 @@ public class UserResponse {
     private String telephone;
 
     @Expose
+    @SerializedName("role")
+    private String role;
+
+    @Expose
     @SerializedName("created at")
     private String createdAt;
 
@@ -62,5 +66,13 @@ public class UserResponse {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

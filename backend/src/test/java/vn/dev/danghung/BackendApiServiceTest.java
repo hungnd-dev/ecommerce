@@ -11,7 +11,7 @@ import vn.dev.danghung.service.SignActionServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BackendApiService {
+public class BackendApiServiceTest {
 
     @Test
     public void contextLoads() {

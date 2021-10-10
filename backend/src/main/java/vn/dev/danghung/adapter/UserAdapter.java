@@ -15,6 +15,7 @@ public class UserAdapter implements EntityAdapter<User, UserResponse> {
         userResponse.setTelephone(entity.getTelephone());
         userResponse.setCreatedAt(DateTimeUtils.generateTime(entity.getCreatedAt()));
         userResponse.setState(entity.getState());
+        userResponse.setRole(entity.getRole());
         return userResponse;
     }
 }
