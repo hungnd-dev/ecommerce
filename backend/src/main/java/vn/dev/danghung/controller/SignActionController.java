@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.dev.danghung.exception.UserException;
 import vn.dev.danghung.model.request.SignRequest;
@@ -31,17 +32,13 @@ public class SignActionController extends BaseController{
     public ResponseEntity<String> createAuthenticationToken(
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String password
+            @RequestBody SignRequest signRequest
     ) {
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
         String svcResponse;
         Object serverResponse;
         try{
-            SignRequest signRequest = new SignRequest();
-            signRequest.setPassword(password);
-            signRequest.setUsername(username);
             serverResponse = signActionService.getJwtTokenRing(signRequest);
             svcResponse = gson.toJson(serverResponse);
             requestLogger.info("finish process request {} in {}", requestUri, sw.stop());
@@ -61,10 +58,7 @@ public class SignActionController extends BaseController{
     public ResponseEntity<String> postUser(
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam(value = "password") String passWord,
-            @RequestParam(value = "username") String userName,
-            @RequestParam(value = "telephone", defaultValue = "")String telephone,
-            @RequestParam(value = "fullname", defaultValue = "") String fullName
+            @RequestBody UserRequest userRequest
 
     ){
         StopWatch sw = new StopWatch();
@@ -72,13 +66,7 @@ public class SignActionController extends BaseController{
         String svcResponse;
         Object serverResponse;
         try {
-            UserRequest userResquest = new UserRequest(
-                    userName,
-                    passWord,
-                    telephone,
-                    fullName
-            );
-            serverResponse = userService.create(userResquest);
+            serverResponse = userService.create(userRequest);
             svcResponse = gson.toJson(serverResponse);
             requestLogger.info("finish process request {} in {}", requestUri, sw.stop());
 

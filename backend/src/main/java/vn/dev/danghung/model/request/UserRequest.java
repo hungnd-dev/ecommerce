@@ -1,35 +1,32 @@
 package vn.dev.danghung.model.request;
 
 public class UserRequest {
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private String phone;
     private String fullName;
 
-    public UserRequest(String userName, String passWord, String phone, String fullName) {
-        this.userName = userName;
-        this.passWord = passWord;
+    public UserRequest(String username, String password, String phone, String fullName) {
+        this.username = username;
+        this.password = password;
         this.phone = phone;
         this.fullName = fullName;
     }
 
-    public UserRequest() {
+    public String getUsername() {
+        return username;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getPassword() {
+        return password;
     }
 
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {

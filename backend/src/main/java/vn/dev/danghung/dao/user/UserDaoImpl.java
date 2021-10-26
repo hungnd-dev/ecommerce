@@ -3,6 +3,7 @@ package vn.dev.danghung.dao.user;
 import org.springframework.stereotype.Component;
 import vn.dev.danghung.dao.AbstractDao;
 import vn.dev.danghung.entities.User;
+import vn.dev.danghung.exception.UserException;
 import vn.dev.danghung.factory.MySQLConnectionFactory;
 import vn.dev.danghung.model.request.UserRequest;
 
@@ -49,7 +50,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     @Override
-    public void create(UserRequest userRequest) throws SQLException {
+    public void create(UserRequest userRequest) throws SQLException, UserException {
         Long currentTime = System.currentTimeMillis();
         String sql = "INSERT INTO " + tUser +
                 "(username,password,telephone,fullname,role,created_at,state) VALUES(?,?,?,?,?,?,?)";
@@ -61,19 +62,19 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(sql);
             ps.setQueryTimeout(1);
-            ps.setString(1, userRequest.getUserName());
-            ps.setString(2, userRequest.getPassWord());
+            ps.setString(1, userRequest.getUsername());
+            ps.setString(2, userRequest.getPassword());
             ps.setString(3, userRequest.getPhone());
             ps.setString(4, userRequest.getFullName());
             ps.setString(5,"client");
             ps.setString(6,currentTime.toString());
             ps.setString(7,String.valueOf(1));
-
             ps.executeUpdate();
             conn.commit();
         } catch (Exception e) {
             eLogger.error("error insert user: ", e);
             conn.rollback();
+            throw new UserException(e.getMessage(),601);
         } finally {
             if (conn != null) {
                 try {

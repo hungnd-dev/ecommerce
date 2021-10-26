@@ -11,8 +11,8 @@ public class AbstractRule {
 
 
     void verifyUserNamePassWord(UserRequest userRequest) throws UserException {
-        String username = userRequest.getUserName();
-        String password = userRequest.getPassWord();
+        String username = userRequest.getUsername();
+        String password = userRequest.getPassword();
         String regex = "^[A-Za-z]\\w{5,29}$";
         //check username
         if(!username.matches(regex)){
@@ -22,7 +22,7 @@ public class AbstractRule {
         if(!password.matches(regex)){
             throw new UserException("password invalid", UserErrorCode.PASSWORD_INVALID);
         }
-        userRequest.setPassWord(passwordEncoder.encode(password));
+        userRequest.setPassword(passwordEncoder.encode(password));
     };
 
     void verifyPhoneNumber(UserRequest userRequest) throws UserException{
