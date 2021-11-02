@@ -1,7 +1,7 @@
-package vn.dev.danghung.dao.user;
+package vn.dev.danghung.dao.jdbc.user;
 
 import org.springframework.stereotype.Component;
-import vn.dev.danghung.dao.AbstractDao;
+import vn.dev.danghung.dao.jdbc.AbstractDao;
 import vn.dev.danghung.entities.User;
 import vn.dev.danghung.exception.UserException;
 import vn.dev.danghung.factory.MySQLConnectionFactory;

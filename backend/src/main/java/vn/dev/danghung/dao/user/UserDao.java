@@ -1,4 +1,4 @@
-package vn.dev.danghung.dao.user;
+package vn.dev.danghung.dao.jdbc.user;
 
 import vn.dev.danghung.entities.User;
 import vn.dev.danghung.exception.UserException;

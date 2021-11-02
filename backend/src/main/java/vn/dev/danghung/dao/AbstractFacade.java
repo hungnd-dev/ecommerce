@@ -1,4 +1,4 @@
-package vn.dev.danghung.dao;
+package vn.dev.danghung.dao.jdbc;
 
 import java.sql.SQLException;
 import java.util.List;

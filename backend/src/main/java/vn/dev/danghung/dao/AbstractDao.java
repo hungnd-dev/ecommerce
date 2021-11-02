@@ -1,4 +1,4 @@
-package vn.dev.danghung.dao;
+package vn.dev.danghung.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,8 @@ public class AbstractDao {
     protected static final Logger pLogger = LogManager.getLogger("WorkerLog");
 
     protected static final String tUser = ConfigInfo.USER_TABLE_NAME;
+    protected static final String tProduct = ConfigInfo.PRODUCT_TABLE_NAME;
+    protected static final String tBrand = ConfigInfo.BRAND_TABLE_NAME;
 
     protected void releaseConnect(Connection conn, PreparedStatement stmt, ResultSet rs){
         if(conn != null){
