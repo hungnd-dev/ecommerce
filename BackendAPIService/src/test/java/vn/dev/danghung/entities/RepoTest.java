@@ -3,9 +3,12 @@ package vn.dev.danghung.entities;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import vn.dev.danghung.dao.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -23,8 +26,6 @@ class RepoTest {
     @Autowired
     private CartDetailRepo cartDetailRepo;
     @Autowired
-    private OrderDetailRepo orderDetailRepo;
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Test
@@ -35,32 +36,35 @@ class RepoTest {
     @Test
     void testProductRepo(){
         int id = 6;
-        System.out.println(productRepo.findById(id).toString());
+//        List<Product> productList = new ArrayList<>();
+//        productList = productRepo.findAll();
+//        for(Product product: productList){
+//            System.out.println(product.toString());
+//        }
+//        System.out.println(productRepo.findById(id).get().toString());
+        List<Integer> idList = new ArrayList<>();
+        idList.add(2);
+        idList.add(5);
+        idList.add(6);
+        System.out.println(productRepo.findAllByIdIn(idList).size());
     }
 
     @Test
     void testUserRepo(){
-        User user = new User();
-        user.setUsername("sbfrdgsvfr");
-        user.setPassword(passwordEncoder.encode("buianhvan"));
-        user.setRole("client");
-        user.setCreatedAt(System.currentTimeMillis());
-        user.setTelephone("012345789");
-        user.setState(1);
-        user.setFullname("Diem Thi Bao An");
+        User user = userRepo.findById(6).get();
+        System.out.println(user.toString());
+        user.setUsername("hahahhahahah");
         userRepo.save(user);
-
+        User userw = userRepo.findById(6).get();
+        System.out.println(userw.toString());
     }
 
     @Test
     void testCartRepo(){
         int id = 6;
-        Cart cart = cartRepo.findById(id).get();
-        if (cart != null) {
-            System.out.println(cart.toString());
-        }else{
-            System.out.println("No data in database");
-        }
+        Cart cart = cartRepo.findByUserIdIsAndOrderStateIs(6,0);
+
+        System.out.println(cart);
     }
     @Test
     void testCartDetailRepo(){
@@ -74,23 +78,16 @@ class RepoTest {
     }
     @Test
     void testOrderRepo(){
-        int id = 6;
-        Order order = orderRepo.findById(id).get();
-        if(order != null){
-            System.out.println(order.toString());
-        }else{
-            System.out.println("No data in database");
-        }
-    }
-    @Test
-    void testOrderDetailRepo(){
-        int id = 6;
-        OrderDetail orderDetail = orderDetailRepo.findById(id).get();
-        if(orderDetail != null){
-            System.out.println(orderDetail.toString());
-        }else{
-            System.out.println("No data in database");
-        }
+//        int id = 6;
+//        Order order = orderRepo.findById(id).get();
+//        if(order != null){
+//            System.out.println(order.toString());
+//        }else{
+//            System.out.println("No data in database");
+//        }
+        long fromDate = 1636017724685L;
+        long toDate = fromDate + 151321;
+        System.out.println(orderRepo.findAllByCreateAtBetween(fromDate,toDate).size());
     }
 
 

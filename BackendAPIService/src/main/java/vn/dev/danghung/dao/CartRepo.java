@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import vn.dev.danghung.entities.Cart;
 @Repository
 public interface CartRepo extends JpaRepository<Cart,Integer> {
+    Cart findByUserIdIsAndOrderStateIs(int userId, int orderState);
 }

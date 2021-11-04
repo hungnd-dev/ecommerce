@@ -26,6 +26,9 @@ public class UserAdapter implements EntitiesAdapter<User, UserResponse>{
         user.setPassword(userRequest.getPassword());
         user.setFullname(userRequest.getFullname());
         user.setTelephone(userRequest.getTelephone());
+        user.setCreatedAt(System.currentTimeMillis());
+        user.setRole("client");
+        user.setState(1);
         return user;
     }
 

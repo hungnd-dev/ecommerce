@@ -29,7 +29,14 @@ public class AbstractRule {
         String phoneNumber = userRequest.getTelephone();
         String regex = "^[0-9]\\d{9}$";
         if(!phoneNumber.matches(regex)){
-            throw new CommonException("phone number invalid",ErrorCode.PHONE_INVALID);
+            throw new CommonException("phone number invalid",ErrorCode.USER_PHONE_INVALID);
+        }
+    }
+
+    void verifyFullName(UserRequest userRequest) throws CommonException{
+        String fName = userRequest.getFullname();
+        if(fName.length() < 8){
+            throw new CommonException("fullname is very short", ErrorCode.USER_FULLNAME_INVALID);
         }
     }
 }

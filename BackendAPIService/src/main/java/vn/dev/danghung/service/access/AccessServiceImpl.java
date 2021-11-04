@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import vn.dev.danghung.adapter.UserAdapter;
+import vn.dev.danghung.dao.CartRepo;
 import vn.dev.danghung.dao.UserRepo;
+import vn.dev.danghung.entities.Cart;
 import vn.dev.danghung.entities.User;
 import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.ErrorCode;
@@ -45,6 +47,9 @@ public class AccessServiceImpl extends AbstractService implements AccessService 
     @Autowired
     private UserRule userRule;
 
+    @Autowired
+    private CartRepo cartRepo;
+
     @Override
     public AccessResponse getJwtToken(AccessRequest accessRequest) throws Exception {
         //check username password
@@ -74,12 +79,18 @@ public class AccessServiceImpl extends AbstractService implements AccessService 
 
     @Override
     public Object create(UserRequest userRequest) throws Exception {
+        //verify
         userRule.verify(userRequest);
+        //save user
         User user = userAdapter.transform(userRequest);
-        user.setCreatedAt(System.currentTimeMillis());
-        user.setRole("client");
-        user.setState(1);
         userRepo.save(user);
-        return null;
+        //get user id after auto increment
+        User user1 = userRepo.findUserByUsername(user.getUsername());
+        //add cart for new user
+        Cart cart = new Cart();
+        cart.setUserId(user1.getId());
+        cart.setOrderState(0);
+        cartRepo.save(cart);
+        return new ArrayList<>();
     }
 }

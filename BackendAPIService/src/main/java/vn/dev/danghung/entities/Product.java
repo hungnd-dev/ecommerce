@@ -1,12 +1,13 @@
 package vn.dev.danghung.entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "name")
@@ -36,7 +37,7 @@ public class Product {
     @Column(name = "sold")
     private int sold;
     @Column(name = "date")
-    private String date;
+    private Date date;
 
     public Product() {
     }
@@ -153,11 +154,11 @@ public class Product {
         this.sold = sold;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

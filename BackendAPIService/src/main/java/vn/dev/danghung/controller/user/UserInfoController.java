@@ -1,44 +1,55 @@
-package vn.dev.danghung.controller.access;
+package vn.dev.danghung.controller.user;
 
 import com.ecyrd.speed4j.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import vn.dev.danghung.adapter.UserAdapter;
 import vn.dev.danghung.builder.Response;
 import vn.dev.danghung.controller.BaseController;
+import vn.dev.danghung.entities.User;
 import vn.dev.danghung.exception.CommonException;
+import vn.dev.danghung.exception.RoleException;
 import vn.dev.danghung.global.StatusCode;
-import vn.dev.danghung.model.request.AccessRequest;
+import vn.dev.danghung.model.request.OrderRequest;
 import vn.dev.danghung.model.request.UserRequest;
-import vn.dev.danghung.service.access.AccessService;
+import vn.dev.danghung.model.response.UserResponse;
+import vn.dev.danghung.service.user.UserService;
 
-import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class AccessController extends BaseController {
+public class UserInfoController extends BaseController {
     @Autowired
-    private AccessService accessService;
-    @PostMapping(value = "/sign_in", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Response signIn(
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("userAdapter")
+    private UserAdapter userAdapter;
+
+    /**
+     * @name user get account's info
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping(value = "/user/info/me", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Response getMyInfo(
             HttpServletRequest request,
-            HttpServletResponse response,
-//            @RequestBody AccessRequest accessRequest
-            @RequestParam("username") String username,
-            @RequestParam("password") String password
+            HttpServletResponse response
     ){
-        String message = "Request complete";
-        Object serviceReponse = null;
-        Response svResponse = new Response();
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
+        String message = "Request complete";
+        Object serviceReponse = null;
+        Response svResponse = null;
         try{
-            AccessRequest accessRequest = new AccessRequest();
-            accessRequest.setUsername(username);
-            accessRequest.setPassword(password);
-            serviceReponse = accessService.getJwtToken(accessRequest);
+            User user = super.getUserByToken(request);
+            super.checkUserState(user);
+            serviceReponse = userAdapter.transform(user);
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (CommonException c){
             message = c.getMessage();
@@ -53,15 +64,22 @@ public class AccessController extends BaseController {
         return svResponse;
     }
 
-    @PostMapping(value = "/sign_up", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Response signUp(
+    /**
+     * @name user change info account
+     * @param request
+     * @param response
+     * @param telephone
+     * @param fullname
+     * @param password
+     * @return
+     */
+    @GetMapping("/user/info/change")
+    public Response changeUserInfo(
             HttpServletRequest request,
             HttpServletResponse response,
-//            @RequestBody UserRequest userRequest
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            @RequestParam("fullname") String fullname,
-            @RequestParam("telephone") String telephone
+            @RequestParam(value = "telephone", defaultValue = "") String telephone,
+            @RequestParam(value = "fullname", defaultValue = "") String fullname,
+            @RequestParam(value = "password", defaultValue = "") String password
     ){
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
@@ -70,11 +88,12 @@ public class AccessController extends BaseController {
         Response svResponse = null;
         try{
             UserRequest userRequest = new UserRequest();
-            userRequest.setUsername(username);
-            userRequest.setPassword(password);
             userRequest.setFullname(fullname);
+            userRequest.setPassword(password);
             userRequest.setTelephone(telephone);
-            serviceReponse = accessService.create(userRequest);
+            User user = super.getUserByToken(request);
+            super.checkUserState(user);
+            serviceReponse = userService.changeInfoUser(user,userRequest);
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (CommonException c){
             message = c.getMessage();
@@ -88,4 +107,5 @@ public class AccessController extends BaseController {
         requestLogger.info("finish request {} in {}", requestUri,sw.stop());
         return svResponse;
     }
+
 }

@@ -1,44 +1,45 @@
-package vn.dev.danghung.controller.access;
+package vn.dev.danghung.controller.guest;
 
 import com.ecyrd.speed4j.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import vn.dev.danghung.builder.Response;
 import vn.dev.danghung.controller.BaseController;
 import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.StatusCode;
-import vn.dev.danghung.model.request.AccessRequest;
-import vn.dev.danghung.model.request.UserRequest;
-import vn.dev.danghung.service.access.AccessService;
+import vn.dev.danghung.service.guest.GuestService;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * guest controller: api for all role
+ * view all product
+ * search product
+ * author: Nguyễn Đăng Hùng HUST K63
+*/
+
 @RestController
-public class AccessController extends BaseController {
+public class GuestController extends BaseController {
     @Autowired
-    private AccessService accessService;
-    @PostMapping(value = "/sign_in", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Response signIn(
+    private GuestService guestService;
+
+    @GetMapping(value = "/product/all")
+    public Response getAllProduct(
             HttpServletRequest request,
-            HttpServletResponse response,
-//            @RequestBody AccessRequest accessRequest
-            @RequestParam("username") String username,
-            @RequestParam("password") String password
+            HttpServletResponse response
     ){
-        String message = "Request complete";
-        Object serviceReponse = null;
-        Response svResponse = new Response();
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
+        String message = "Request complete";
+        Object serviceReponse = new Object();
+        Response svResponse = null;
         try{
-            AccessRequest accessRequest = new AccessRequest();
-            accessRequest.setUsername(username);
-            accessRequest.setPassword(password);
-            serviceReponse = accessService.getJwtToken(accessRequest);
+            serviceReponse = guestService.getAllProduct();
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (CommonException c){
             message = c.getMessage();
@@ -53,15 +54,11 @@ public class AccessController extends BaseController {
         return svResponse;
     }
 
-    @PostMapping(value = "/sign_up", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Response signUp(
+    @GetMapping(value = "/product/search")
+    public Response getProductBySearchKey(
             HttpServletRequest request,
             HttpServletResponse response,
-//            @RequestBody UserRequest userRequest
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            @RequestParam("fullname") String fullname,
-            @RequestParam("telephone") String telephone
+            @RequestParam("key") String sKey
     ){
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
@@ -69,12 +66,32 @@ public class AccessController extends BaseController {
         Object serviceReponse = null;
         Response svResponse = null;
         try{
-            UserRequest userRequest = new UserRequest();
-            userRequest.setUsername(username);
-            userRequest.setPassword(password);
-            userRequest.setFullname(fullname);
-            userRequest.setTelephone(telephone);
-            serviceReponse = accessService.create(userRequest);
+            serviceReponse = guestService.findProduct(sKey);
+            svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
+        } catch (CommonException c){
+            message = c.getMessage();
+            int code = c.getCode();
+            svResponse = buildResponse(code, StatusCode.FAILURE,message,serviceReponse);
+
+        } catch(Exception e) {
+            message = "an error occurred";
+            svResponse = buildResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), StatusCode.FAILURE,message,serviceReponse);
+        }
+        requestLogger.info("finish request {} in {}", requestUri,sw.stop());
+        return svResponse;
+    }
+    @GetMapping(value = "/brand/all")
+    public Response getAllBrand(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        StopWatch sw = new StopWatch();
+        String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
+        String message = "Request complete";
+        Object serviceReponse = new Object();
+        Response svResponse = null;
+        try{
+            serviceReponse = guestService.getAllBrand();
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (CommonException c){
             message = c.getMessage();

@@ -156,4 +156,8 @@ public class CommonUtils {
         if (source == null) return "";
         return source.trim();
     }
+
+    public static boolean checkEmpty(String s){
+        return s == null || s.isEmpty() || s == "";
+    }
 }

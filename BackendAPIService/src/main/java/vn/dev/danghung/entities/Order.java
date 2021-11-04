@@ -3,7 +3,7 @@ package vn.dev.danghung.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +12,8 @@ public class Order {
 
     @Column(name = "user_id")
     private int userId;
+    @Column(name = "cart_id")
+    private int cartId;
 
     @Column(name = "address")
     private String address;
@@ -23,10 +25,15 @@ public class Order {
     private String phoneReceive;
 
     @Column(name = "create_at")
-    private String createAt;
+    private long createAt;
+
+    @Column(name = "amount")
+    private Double amount;
 
     @Column(name = "state")
     private int state;
+
+
 
     public Order() {
     }
@@ -71,11 +78,11 @@ public class Order {
         this.phoneReceive = phoneReceive;
     }
 
-    public String getCreateAt() {
+    public long getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(String createAt) {
+    public void setCreateAt(long createAt) {
         this.createAt = createAt;
     }
 
@@ -87,15 +94,33 @@ public class Order {
         this.state = state;
     }
 
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", cartId=" + cartId +
                 ", address='" + address + '\'' +
                 ", deliveryType='" + deliveryType + '\'' +
                 ", phoneReceive='" + phoneReceive + '\'' +
-                ", createAt='" + createAt + '\'' +
+                ", createAt=" + createAt +
+                ", amount=" + amount +
                 ", state=" + state +
                 '}';
     }

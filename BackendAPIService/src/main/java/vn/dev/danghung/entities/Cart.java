@@ -16,6 +16,9 @@ public class Cart {
     @Column(name = "order_state")
     private int orderState;
 
+    @Column(name = "amount")
+    private double amount;
+
     public Cart() {
     }
 
@@ -50,5 +53,13 @@ public class Cart {
                 ", userId=" + userId +
                 ", orderState=" + orderState +
                 '}';
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }
