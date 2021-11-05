@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
+import Home from "./pages/Home/Home";
+import {useState} from "react";
+import {UserContext} from "./contexts/user/UserContext";
+import {TokenContext} from "./contexts/token/TokenContext";
+import {StateContext} from "./contexts/state/StateContext";
 function App() {
+    const [user, setUser] = useState({});
+    const [token,setToken] = useState("");
+    if(localStorage.getItem('signIn') === null){
+        localStorage.setItem('signIn',0) //0: dont sign in, 1: sign in
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <TokenContext.Provider value={{token,setToken}}>
+              <UserContext.Provider value={{user,setUser}}>
+                  <div className="App">
+                      <Router>
+                          <Switch>
+                              <Route path={"/"}>
+                                  <Home/>
+                              </Route>
+                          </Switch>
+                      </Router>
+                  </div>
+              </UserContext.Provider>
+          </TokenContext.Provider>
   );
 }
 

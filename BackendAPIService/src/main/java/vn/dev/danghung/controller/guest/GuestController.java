@@ -11,8 +11,6 @@ import vn.dev.danghung.controller.BaseController;
 import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.StatusCode;
 import vn.dev.danghung.service.guest.GuestService;
-
-import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

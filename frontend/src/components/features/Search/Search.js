@@ -1,6 +1,6 @@
 import {useHistory} from "react-router";
-import {HOME} from "../../constants/Routes";
-
+import {HOME} from "../../../constants/Routes";
+import "../../../App.css"
 export default function Search(){
     const history=useHistory()
     const onSearch=()=>{

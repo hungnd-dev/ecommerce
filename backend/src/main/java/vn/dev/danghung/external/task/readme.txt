@@ -1,1 +1,0 @@
-chứa các thủ tục sử dụng HTTP Connection Pooling gọi API và nhận raw String từ API response
