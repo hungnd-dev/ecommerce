@@ -1,0 +1,56 @@
+.BestSeller {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.home-tab-content-nothing{
+    text-align: center;
+    width: 100%;
+    text-transform: capitalize;
+    margin-top:150px;
+}
+
+.tab-loadmore {
+    margin-bottom:  45px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.tab-loadmore-btn {
+    width: 150px;
+    height: 25px;
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+    align-items: center;
+    background-color: #343434 !important;
+    color: #fff !important;
+    border-radius: 5px;
+}
+
+.tab-loadmore-loading {
+    position: absolute;
+}
+.btn-nothover {
+    background-color: #232323 !important;
+    color: #fff !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loading-icon {
+    border: 3px solid #343434;
+    border-radius: 50%;
+    /*border-top: 3px solid #fff;*/
+    /*border-right: 3px solid #fff;*/
+    /*border-bottom: 3px solid #fff;*/
+    width: 10px;
+    height: 10px;
+    animation: spin 1.5s linear infinite;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

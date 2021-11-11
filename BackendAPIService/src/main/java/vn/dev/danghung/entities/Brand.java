@@ -13,6 +13,9 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "defaul_image")
+    private String defaultImage;
+
     public Brand() {
     }
 
@@ -30,6 +33,14 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDefaultImage() {
+        return defaultImage;
+    }
+
+    public void setDefaultImage(String defaultImage) {
+        this.defaultImage = defaultImage;
     }
 
     @Override

@@ -1,0 +1,12 @@
+.confirm{
+    font-size: 14px;
+}
+.confirm:hover{
+    background-color: #5cb85c;
+}
+.reject{
+    font-size: 14px;
+}
+.reject:hover{
+    background-color: #d9534f;
+}

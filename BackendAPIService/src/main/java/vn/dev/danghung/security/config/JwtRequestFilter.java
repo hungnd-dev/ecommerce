@@ -69,10 +69,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(request, response);
 	}
-
-	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		String path = request.getRequestURI();
-		return path.contains("/product") || path.contains("/sign_in") ||path.contains("/sign_up");
-	}
 }

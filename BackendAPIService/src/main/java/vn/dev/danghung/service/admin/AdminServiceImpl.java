@@ -4,16 +4,25 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vn.dev.danghung.adapter.OrderAdapter;
+import vn.dev.danghung.adapter.ProductAdapter;
 import vn.dev.danghung.adapter.UserAdapter;
+import vn.dev.danghung.dao.BrandRepo;
 import vn.dev.danghung.dao.OrderRepo;
+import vn.dev.danghung.dao.ProductRepo;
 import vn.dev.danghung.dao.UserRepo;
+import vn.dev.danghung.entities.Brand;
 import vn.dev.danghung.entities.Order;
+import vn.dev.danghung.entities.Product;
 import vn.dev.danghung.entities.User;
 import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.ErrorCode;
+import vn.dev.danghung.model.request.ProductRequest;
+import vn.dev.danghung.model.response.OrderResponse;
 import vn.dev.danghung.model.response.StatisticalResponse;
 import vn.dev.danghung.model.response.UserResponse;
 import vn.dev.danghung.policy.DateTimeRule;
+import vn.dev.danghung.policy.ProductRule;
 import vn.dev.danghung.service.AbstractService;
 import vn.dev.danghung.utils.CommonUtils;
 import vn.dev.danghung.utils.DateTimeUtils;
@@ -31,12 +40,27 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
     private OrderRepo orderRepo;
 
     @Autowired
+    private ProductRepo productRepo;
+
+    @Autowired
+    private BrandRepo brandRepo;
+
+    @Autowired
     private DateTimeRule dateTimeRule;
+    @Autowired
+    private ProductRule productRule;
 
     @Autowired
     @Qualifier("userAdapter")
     private UserAdapter userAdapter;
 
+    @Autowired
+    @Qualifier("productAdapter")
+    private ProductAdapter productAdapter;
+
+    @Autowired
+    @Qualifier("orderAdapter")
+    private OrderAdapter orderAdapter;
     @Override
     public Object blockUser(String username) throws Exception {
         if (CommonUtils.checkEmpty(username)) {
@@ -90,13 +114,21 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
     @Override
     public Object viewAllOrder() throws Exception {
         List<Order> orderList = new ArrayList<>();
+        List<OrderResponse> orderResponses = new ArrayList<>();
         try {
             orderList = orderRepo.findAll();
+            for(Order order: orderList){
+                OrderResponse orderResponse = new OrderResponse();
+                orderResponse = orderAdapter.transform(order);
+                UserResponse userResponse = userAdapter.transform(userRepo.findById(order.getUserId()).get());
+                orderResponse.setUser(userResponse);
+                orderResponses.add(orderResponse);
+            }
         } catch (Exception e) {
             eLogger.error("error when view all order, reason {}", e.getMessage());
             throw new CommonException("error when view all order", ErrorCode.ADMIN_GET_ORDER);
         }
-        return orderList;
+        return orderResponses;
     }
 
     @Override
@@ -140,12 +172,14 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
     }
 
     @Override
-    public Object viewTotalMoneyAndOrder(String fromDate, String toDate) throws Exception {
-        dateTimeRule.verify(fromDate,toDate);
-        String datePattern = "yyyy-MM-dd";
+    public Object viewTotalMoneyAndOrder(int month) throws Exception {
+////        dateTimeRule.verify(fromDate,toDate);
+//        String fromDate = DateTimeUtils.generateTime(System.currentTimeMillis() - 1000*60*60*24*30*month);
+//        String toDate = DateTimeUtils.generateTime(System.currentTimeMillis());
+//        String datePattern = "yyyy-MM-dd";
         StatisticalResponse statisticalResponse = new StatisticalResponse();
-        long from = DateTimeUtils.getTimeInMilliSecs(fromDate, datePattern);
-        long to = DateTimeUtils.getTimeInMilliSecs(toDate, datePattern) + 1000 * 60 * 60 * 24 - 1;
+        long to = System.currentTimeMillis();
+        long from = to-2592000000L*month;
         try {
             List<Order> orderList = orderRepo.findAllByCreateAtBetween(from, to);
 
@@ -175,6 +209,44 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
             throw new CommonException("error when total money in year", ErrorCode.ADMIN_STATISTICAL);
         }
         return statisticalResponse;
+    }
+
+    @Override
+    public Object addProduct(ProductRequest productRequest) throws Exception {
+        productRule.verify(productRequest);
+        //add rule
+        try{
+            Brand brand = brandRepo.findByName(productRequest.getBrandName().toLowerCase());
+            Product product = productAdapter.transform(productRequest);
+            product.setBrandId(brand.getId());
+            if (CommonUtils.checkEmpty(product.getImages())){
+                product.setImages(brand.getDefaultImage());
+            }
+            productRepo.save(product);
+        }catch (Exception e){
+            eLogger.error("error when add product in service, reason {}", e.getMessage());
+            throw new CommonException("error when add product in service", ErrorCode.PRODUCT_ADD);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Object updateProduct() throws Exception {
+        return null;
+    }
+
+
+    @Override
+    public Object addBrand(String brandName) throws Exception {
+        try{
+            Brand brand = new Brand();
+            brand.setName(brandName);
+            brandRepo.save(brand);
+        }catch (Exception e){
+            eLogger.error("error when add new brand from service, reason {}", e.getMessage());
+            throw new CommonException("error when add new brand", ErrorCode.BRAND_ADD);
+        }
+        return new ArrayList<>();
     }
 
 }

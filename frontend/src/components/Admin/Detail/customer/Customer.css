@@ -1,0 +1,7 @@
+.column-block{
+    align-items: center;
+}
+.column-block:hover{
+    background-color: red;
+    color: white;
+}

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import vn.dev.danghung.entities.Brand;
 @Repository
 public interface BrandRepo extends JpaRepository<Brand, Integer> {
+    Brand findByName(String name);
 }

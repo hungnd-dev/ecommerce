@@ -3,6 +3,7 @@ package vn.dev.danghung.controller.admin;
 import com.ecyrd.speed4j.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@CrossOrigin
 public class AdminStatisticalController extends BaseController {
     @Autowired
     private AdminService adminService;
@@ -24,8 +26,7 @@ public class AdminStatisticalController extends BaseController {
     public Response statisticalOrder(
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam("from_date") String fromDate,
-            @RequestParam("to_date") String toDate
+            @RequestParam("month") int month
     ){
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
@@ -33,7 +34,7 @@ public class AdminStatisticalController extends BaseController {
         Object serviceReponse = null;
         Response svResponse = null;
         try{
-            serviceReponse = adminService.viewTotalMoneyAndOrder(fromDate,toDate);
+            serviceReponse = adminService.viewTotalMoneyAndOrder(month);
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (CommonException c){
             message = c.getMessage();

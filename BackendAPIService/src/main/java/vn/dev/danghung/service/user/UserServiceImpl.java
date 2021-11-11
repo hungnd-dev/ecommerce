@@ -145,6 +145,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
             orderRepo.save(order);
             cart.setOrderState(1);
             cartRepo.save(cart);
+            //create new cart for this user
+            Cart cartN = new Cart();
+            cartN.setUserId(user.getId());
+            cartN.setOrderState(0);
+            cartRepo.save(cartN);
         }catch (Exception e){
             eLogger.error("error when create order, reason {}", e.getMessage());
             throw new CommonException("error when create order", ErrorCode.ORDER_USER_CREATE);

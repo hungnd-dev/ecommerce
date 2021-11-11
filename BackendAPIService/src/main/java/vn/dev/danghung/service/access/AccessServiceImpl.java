@@ -58,7 +58,7 @@ public class AccessServiceImpl extends AbstractService implements AccessService 
                 .loadUserByUsername(accessRequest.getUsername());
         //generate token
         String token = jwtTokenUtil.generateToken(userDetails);
-        Long exp = 3600000L;
+        Long exp = jwtTokenUtil.JWT_TOKEN_VALIDITY*1000;
         //get user from token
         String username = jwtTokenUtil.getUsernameFromToken(token);
         UserResponse userResponse = userAdapter.transform(userRepo.findUserByUsername(username));

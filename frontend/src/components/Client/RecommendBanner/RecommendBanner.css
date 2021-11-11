@@ -1,0 +1,108 @@
+.RecommendBanner {
+    padding: 40px 40px 0 40px;
+}
+
+.RecommendBanner-container {
+    width: 100%;
+    height: 100%;
+}
+
+.banner-box {
+    width: 50%;
+    height: 535px;
+    margin: 0;
+}
+
+.banner-top {
+    width: 100%;
+    height: 50%;
+}
+
+.banner-top2 {
+    width: 50%;
+    height: 100%;
+}
+
+.banner-bottom {
+    width: 100%;
+    height: 50%;
+}
+
+.img-hover {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s linear;
+}
+
+.img-hover img {
+    transition: transform 0.5s linear;
+}
+
+.img-hover:hover img {
+    transform: scale(1.08);
+}
+
+.blackbox-center-container:hover .blackbox-center {
+    opacity: 1;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(3, 3, 3, 0.6);
+}
+
+.blackbox-center-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.blackbox-center {
+    width: 40px;
+    height: 40%;
+    transition: 0.5s;
+    opacity: 0;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blackbox-title {
+    color: #fff;
+    position: absolute;
+    font-size: 50px;
+    font-weight: 200;
+    font-family: sans-serif;
+    z-index: 10;
+}
+
+.blackbox-link {
+    font-size: 16px;
+    margin-top: 120px;
+    cursor: pointer;
+}
+
+.blackbox-link::after {
+    cursor: pointer;
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: #fff;
+    bottom: -3px;
+}
+
+.blackbox-title-medium {
+    font-size: 40px;
+}
+
+.blackbox-title-small {
+    font-size: 30px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}

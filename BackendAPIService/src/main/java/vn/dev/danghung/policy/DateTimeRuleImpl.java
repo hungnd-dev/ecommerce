@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Component
 public class DateTimeRuleImpl extends AbstractRule implements DateTimeRule{
-    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public void verify(String fromDate, String toDate) throws Exception {
         if(CommonUtils.checkEmpty(fromDate)){

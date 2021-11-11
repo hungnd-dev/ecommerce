@@ -1,18 +1,24 @@
 package vn.dev.danghung.service.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vn.dev.danghung.adapter.ProductAdapter;
 import vn.dev.danghung.dao.BrandRepo;
 import vn.dev.danghung.dao.ProductRepo;
 import vn.dev.danghung.entities.Brand;
 import vn.dev.danghung.entities.Product;
 import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.ErrorCode;
+import vn.dev.danghung.model.response.ProductResponse;
 import vn.dev.danghung.service.AbstractService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Service
 public class GuestServiceImpl extends AbstractService implements GuestService {
     @Autowired
@@ -20,11 +26,22 @@ public class GuestServiceImpl extends AbstractService implements GuestService {
     @Autowired
     private BrandRepo brandRepo;
 
+    @Autowired
+    @Qualifier("productAdapter")
+    private ProductAdapter productAdapter;
+
     @Override
-    public List<Product> getAllProduct() throws Exception {
-        List<Product> productList = new ArrayList<>();
+    public List<ProductResponse> getAllProduct() throws Exception {
+        List<ProductResponse> productList = new ArrayList<>();
+        List<Brand> brandList = getAllBrand();
+        Map<Integer,Brand> brandMap = brandList.stream().collect(Collectors.toMap(Brand::getId, Function.identity()));
         try {
-            productList = productRepo.findAll();
+            productList = productRepo.findAll().stream()
+                    .map((e) ->{ ProductResponse productResponse = productAdapter.transform(e);
+                        productResponse.setBrandName(brandMap.get(e.getBrandId()).getName());
+                        return productResponse;
+                    })
+                    .collect(Collectors.toList());
             return productList;
         }catch (Exception e){
             eLogger.error("error when find all product, reason {}", e.getMessage());

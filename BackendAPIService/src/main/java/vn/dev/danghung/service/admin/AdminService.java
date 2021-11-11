@@ -1,5 +1,7 @@
 package vn.dev.danghung.service.admin;
 
+import vn.dev.danghung.model.request.ProductRequest;
+
 public interface AdminService {
     Object blockUser(String username) throws Exception;
 
@@ -15,7 +17,13 @@ public interface AdminService {
 
     Object rejectOrder(Integer orderId) throws Exception;
 
-    Object viewTotalMoneyAndOrder(String fromDate, String toDate) throws Exception;
+    Object viewTotalMoneyAndOrder(int month) throws Exception;
+
+    Object addProduct(ProductRequest productRequest) throws Exception;
+
+    Object updateProduct() throws Exception;
+
+    Object addBrand(String brandName) throws Exception;
 
 
 }

@@ -1,0 +1,81 @@
+.header{
+    position: absolute;
+    height: 75px;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    grid-template-columns: auto auto auto auto;
+    /*create 4 grid for use*/
+    background: rgba(204, 204, 204, 0);
+    transition: .4s ease-in-out;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+.input{
+    height: 30px;
+    font-size: 15px;
+    width: 100%;
+}
+li{
+    height: 75px;
+    display: flex;
+    align-items: center;
+}
+li a {
+    position: relative;
+    text-transform: uppercase;
+    display: block;
+    margin: 15px;
+    color: white;
+    text-decoration: none;
+}
+li div {
+    margin-left: 20px;
+}
+.header div:nth-child(1) li a::after {
+    position: absolute;
+    content: "";
+    display: block;
+    right: 0;
+    background: black;
+    width: 0;
+    height: 2px;
+    margin-top: 3px;
+    transition: all .4s;
+}
+.header div:nth-child(1) li a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.header:hover{
+    background-color: #b0b0b0;
+}
+
+.header a:hover{
+    color: black;
+}
+
+.personal-icon,.wishlist-icon,.search-icon,.cart-icon{
+    color: white;
+}
+
+.personal-icon:hover,.search-icon:hover,.cart-icon:hover,.wishlist-icon:hover{
+    cursor: pointer;
+    color: black
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex{
+    display: flex;
+}

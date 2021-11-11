@@ -5,9 +5,12 @@ import vn.dev.danghung.exception.CommonException;
 import vn.dev.danghung.global.ErrorCode;
 import vn.dev.danghung.model.request.UserRequest;
 
+import java.text.SimpleDateFormat;
+
 public class AbstractRule {
     @Autowired
     private PasswordEncoder passwordEncoder;
+    protected SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 
     void verifyUserNamePassWord(UserRequest userRequest) throws CommonException {

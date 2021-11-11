@@ -1,0 +1,21 @@
+.button-product{
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    color: cadetblue;
+}
+.img-product{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+}
+.button-default{
+    color: black;
+    background-color: white;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+}

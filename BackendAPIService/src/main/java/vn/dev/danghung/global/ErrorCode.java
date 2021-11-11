@@ -18,6 +18,13 @@ public class ErrorCode {
     public static final int PRODUCT_FIND_ALL = 630;
     public static final int PRODUCT_FIND = 631;
     public static final int BRAND_FIND_ALL = 632;
+    public static final int PRODUCT_ADD = 633;
+    public static final int BRAND_ADD = 634;
+    public static final int PRODUCT_NAME = 635;
+    public static final int PRODUCT_DONT_PARSE = 636;
+    public static final int PRODUCT_DES = 637;
+    public static final int PRODUCT_DISPLAY = 638;
+    public static final int PRODUCT_CPU = 639;
     //////////////////////////////////////////////////
     //cart error 640-649
     public static final int CART_ADD = 640;

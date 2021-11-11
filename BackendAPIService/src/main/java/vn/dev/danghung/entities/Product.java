@@ -1,7 +1,6 @@
 package vn.dev.danghung.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Table(name = "product")
@@ -37,9 +36,26 @@ public class Product {
     @Column(name = "sold")
     private int sold;
     @Column(name = "date")
-    private Date date;
+    private String date;
 
     public Product() {
+    }
+
+    public Product(String name, double price, int quantity, String images, String des, int brandId, int ram, int ssd, String display, double weight, String cpu, int sale, int sold, String date) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.images = images;
+        this.des = des;
+        this.brandId = brandId;
+        this.ram = ram;
+        this.ssd = ssd;
+        this.display = display;
+        this.weight = weight;
+        this.cpu = cpu;
+        this.sale = sale;
+        this.sold = sold;
+        this.date = date;
     }
 
     public int getId() {
@@ -154,11 +170,11 @@ public class Product {
         this.sold = sold;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
