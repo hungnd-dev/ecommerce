@@ -1,0 +1,40 @@
+.best-seller{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.tab-filter {
+    margin-bottom: 45px;
+    margin-top: 20px;
+    position: relative;
+}
+.tab-filter-btn{
+    width: 200px;
+    height: 60px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+}
+.tab-filter-loading{
+    position: absolute;
+    top: 0;
+}
+.btn-not-hover{
+    background-color: #232323 !important;
+    color: #fff !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loading-icon {
+    border: 3px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1.5s linear infinite;
+}

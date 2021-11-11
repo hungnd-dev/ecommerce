@@ -1,9 +1,11 @@
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
-import Home from "./pages/Home/Home";
+import Home from "./pages/Client/Home";
 import Admin from "./pages/Admin/Admin";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {ProductContext} from "./context/ProductContext";
+import ProductDetail from "./pages/Client/ProductDetail";
+import ProductPage from "./pages/Client/ProductPage";
 
 function App() {
     const [loading, setLoading] = useState(true)
@@ -35,7 +37,10 @@ function App() {
                     <Router>
                         <Switch>
                             <Route path={"/admin"} component={Admin}/>
+                            <Route path={"/product/:id"} component={ProductDetail}/>
+                            <Route path={"/product"} component={ProductPage}/>
                             <Route path={"/"} component={Home}/>
+                            <Route path={"/home"} component={Home}/>
                         </Switch>
                     </Router>
                 </div>
