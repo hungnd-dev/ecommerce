@@ -12,4 +12,6 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
     List<Order> findAllByStateIs(int state);
 
     List<Order> findAllByCreateAtBetween(long fromDate, long toDate);
+
+    Order findByIdIsAndUserIdIs(int orderId, int userId);
 }

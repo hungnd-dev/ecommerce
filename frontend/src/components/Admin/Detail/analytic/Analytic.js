@@ -1,13 +1,17 @@
-import {useHistory} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Table from "../../Table/Table";
-
-export default function Analytic(){
-    const [month,setMonth] = useState(1);
-    const [analytic,setAnalytic] = useState([]);
-    let token = "Bearer ".concat(localStorage.getItem("tokenAdmin"))
-    const [isLoading,setIsLoading] = useState(true);
+import {ToastCustomContext} from "../../../../context/ToastContext";
+import './Analytic.css'
+import '../../../../assets/css/index.css'
+import '../../../../assets/css/grid.css'
+import {GlobalContext} from "../../../../context/GlobalContext";
+export default function Analytic() {
+    const toast = useContext(ToastCustomContext)
+    const global = useContext(GlobalContext)
+    const [month, setMonth] = useState(1);
+    const [analytic, setAnalytic] = useState([]);
+    let token = "Bearer ".concat(localStorage.getItem("token_admin"))
     const analyticTableHead = [
         'order',
         'order unpaid',
@@ -22,35 +26,31 @@ export default function Analytic(){
             <td>{item.totalOrderUnpaid}</td>
             <td>{item.totalOrderPaid}</td>
             <td>{item.totalOrderReject}</td>
-            <td>{item.money}</td>
+            <td>{global.convert(item.money)}</td>
         </tr>
     )
-    useEffect(()=>{
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:10399/admin/statistical?month="+month,
-            headers:{
+            method: "get",
+            url: "http://localhost:10399/admin/statistical?month=" + month,
+            headers: {
                 Authorization: token
             }
-        }).then(res =>{
+        }).then(res => {
             let r = [];
             r.push(res.data.data)
             setAnalytic(r)
-            setIsLoading(false)
         })
-            .catch(err =>{
-                alert(err)
+            .catch(err => {
+                toast.showToast(err.message,"error")
             })
 
-    },[month])
-    const handleOnChange = ()=>{
+    }, [month])
+    const handleOnChange = () => {
         let x = document.getElementById("cars").value
         setMonth(x);
     }
-    if(isLoading){
-        return <div></div>
-    }
-    return(
+    return (
         <div>
             <h2 className="page-header">
                 Analytics
@@ -58,10 +58,10 @@ export default function Analytic(){
             <label htmlFor="cars">Choose time:</label>
 
             <select id="cars" onChange={handleOnChange}>
-                <option value="1" selected >1 month</option>
-                <option value="3" >3 month</option>
-                <option value="6" >6 month</option>
-                <option value="12" >12 month</option>
+                <option value="1" selected>1 month</option>
+                <option value="3">3 month</option>
+                <option value="6">6 month</option>
+                <option value="12">12 month</option>
             </select>
             <div className="row">
                 <div className="col-12">

@@ -1,4 +1,4 @@
-export default function SidebarItem(props){
+export default function SidebarItem(props) {
     const active = props.active ? 'active' : ''
 
     return (

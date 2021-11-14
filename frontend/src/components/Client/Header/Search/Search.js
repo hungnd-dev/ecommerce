@@ -1,28 +1,34 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faCheckCircle, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons';
 import './Search.css'
 import '../../../../App.css'
+import '../../../../assets/css/index.css'
+import '../../../../assets/css/grid.css'
+import '../../../../assets/boxicons-2.0.7/css/boxicons.min.css'
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-export default function Search(props){
+import {ToastCustomContext} from "../../../../context/ToastContext";
+
+export default function Search(props) {
+    const toast = useContext(ToastCustomContext)
     const history = useHistory()
     const [products, setProducts] = useState([])
     const [searchInput, setSearchInput] = useState("")
     const [constProducts, setConstProducts] = useState([])
-    useEffect(()=>{
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:10399/product/all",
-        }).then(res =>{
+            method: "get",
+            url: "http://localhost:10399/product/all",
+        }).then(res => {
             setProducts(res.data.data)
             setConstProducts(res.data.data)
         })
-            .catch(err =>{
-                alert(err)
+            .catch(err => {
+                toast.showToast(err.message,"error")
             })
 
-    },[])
+    }, [])
 
     const search = (event) => {
         const value = event.target.value
@@ -48,7 +54,7 @@ export default function Search(props){
                     className="search-close"
                     onClick={props.clickToClose}
                 >
-                    <FontAwesomeIcon icon ={faTimes} className="icon"/>
+                    <FontAwesomeIcon icon={faTimes} className="icon"/>
                 </div>
             </div>
 
@@ -63,9 +69,9 @@ export default function Search(props){
 
                     {
                         (products.length > 0 && searchInput !== "") &&
-                        products.map((item,index) => {
+                        products.map((item, index) => {
                             return (
-                                <div className="search-item" key={index} >
+                                <div className="search-item" key={index}>
                                     <div className="search-item-img">
                                         <img src={item.images} height="100%" alt=""/>
                                     </div>
@@ -75,7 +81,8 @@ export default function Search(props){
                                         </div>
                                     </div>
                                     <div className="item-view">
-                                        <div className="button" key={item.id} id={item.id} onClick={()=>handleClick(item.id)}>
+                                        <div className="button" key={item.id} id={item.id}
+                                             onClick={() => handleClick(item.id)}>
                                             VIEW
                                         </div>
                                     </div>

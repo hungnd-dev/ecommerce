@@ -1,138 +1,161 @@
 .BestSeller {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .Product {
-  width: calc(25%);
-  padding: 15px 15px 20px 15px;
-  text-align: center;
-  height: calc(25vw);
+    width: calc(25%);
+    padding: 15px 15px 20px 15px;
+    text-align: center;
+    height: calc(25vw);
 }
 
-.Product:hover{
-  background-clip: border-box;
-  box-shadow: 0 0 3px 0 #dee2e6;
-  border-radius: 6px;
+.Product:hover {
+    background-clip: border-box;
+    box-shadow: 0 0 3px 0 #dee2e6;
+    border-radius: 6px;
 }
 
 .product-img {
-  height: calc(25vw - 100px);
-  position: relative;
+    height: calc(25vw - 100px);
+    position: relative;
+    transition: transform .3s;
 }
 
 .product-img:hover {
-  cursor: pointer;
+    cursor: pointer;
+    transform: scale(1.15);
 }
+
 .product-tag {
-  position: absolute;
-  z-index: 2;
-  font-size: 10px;
-  color: #fff;
-  font-family: sans-serif;
-  font-weight: bold;
-  top: 5px;
-  left: 0;
+    position: absolute;
+    z-index: 2;
+    font-size: 10px;
+    color: #fff;
+    font-family: sans-serif;
+    font-weight: bold;
+    top: 5px;
+    left: 0;
 }
+
 .product-tag-item {
-  line-height: 20px;
-  width: auto;
-  height: auto;
-  margin: 10px 0;
-  text-align: center;
+    line-height: 20px;
+    width: 40px;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
 }
+
 .sale {
-  background: #1cd481;
+    background: red;
 }
+
 .hot {
-  background: #fc5050;
+    background: #fc5050;
 }
+
 .new {
-  background: #fc9953;
+    background: #fc9953;
 }
+
 .product-img-bg {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
+
 .product-img-bg img {
-  height: 100%;
-  transition: 1s;
-  width: 100%;
+    height: 100%;
+    transition: 1s;
+    width: 100%;
 }
+
 .product-img-bg .img-default {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
+
 .hide {
-  visibility: hidden;
-  opacity: 0;
+    visibility: hidden;
+    opacity: 0;
 }
+
 .product-title {
-  margin-top: 20px;
-  font-size: 14px;
-  /* Add ... if text is full */
-  max-width: 100%;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+    margin-top: 20px;
+    font-size: 14px;
+    /* Add ... if text is full */
+    max-width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
+
 .product-price {
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  color: red;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: red;
 }
 
 .product-overlay {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  bottom: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content:space-around;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
 }
 
 .product-icon-box {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
 }
 
 .icon-cart {
-  position: relative;
-  transition: .5s;
-  bottom: -60px;
+    position: relative;
+    transition: .5s;
+    bottom: -60px;
 }
+
 .icon-view {
-  transition: .5s;
-  position: relative;
-  bottom: -60px;
+    transition: .5s;
+    position: relative;
+    bottom: -60px;
 }
 
 .Product:hover .icon-cart {
-  transform: translateY(-55px);
+    transform: translateY(-55px);
 }
+
 .Product:hover .icon-view {
-  transform: translateY(-55px);
+    transform: translateY(-55px);
 }
 
 .flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.btn-product{
-  height: 40px;
-  width: 40px;
-  margin: 5px;
-  background-color: #232323 !important;
-  color: #fff !important;
-  cursor: pointer;
-  font-size: 20px;
-  border-radius: 7px;
+
+.flex-right{
+    display: flex;
+    justify-content: center;
+    align-items: revert;
+}
+
+.btn-product {
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    background-color: #232323 !important;
+    color: #fff !important;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
 }

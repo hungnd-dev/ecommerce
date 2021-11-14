@@ -1,24 +1,26 @@
 import React from 'react'
 import './topnav.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faSearch, faUser, faCartPlus, faBars, faAngleDown, faBell} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faBell, faUser} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
-export default function TopNav(props){
+import '../../../assets/boxicons-2.0.7/css/boxicons.min.css'
+import '../../../App.css'
+export default function TopNav(props) {
     const history = useHistory();
-    const toProfile = ()=>{
+    const toProfile = () => {
         history.push("/admin/profile");
     }
-    const toSetting = ()=>{
+    const toSetting = () => {
         history.push("/admin/setting");
     }
     return (
-        <div className='topnav'>
-            <div className="topnav__search">
-                <input type="text" placeholder='Search here...' />
+        <div className='top-nav'>
+            <div className="top-nav__search">
+                <input type="text" placeholder='Search here...'/>
                 <i className='bx bx-search'></i>
             </div>
-            <div className="topnav__right">
-                <div className="topnav__right-item">
+            <div className="top-nav__right">
+                <div className="top-nav__right-item">
                     <div className={"dropdown"}>
                         <FontAwesomeIcon icon={faUser}/>
                         <div className={"dropdown-content"}>
@@ -29,7 +31,7 @@ export default function TopNav(props){
                     </div>
                 </div>
 
-                <div className="topnav__right-item">
+                <div className="top-nav__right-item">
                     <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
                 </div>
             </div>

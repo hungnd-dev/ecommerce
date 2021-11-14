@@ -1,0 +1,28 @@
+.ProductRecommend {
+    padding: 0 25px;
+}
+
+.newsletter-container {
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.newsletter-title {
+    font-size: 23px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+    font-family: Poppins-medium;
+}
+
+.review-like {
+    margin-top: 30px;
+    color: #777;
+}
+
+.RecommendProduct {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}

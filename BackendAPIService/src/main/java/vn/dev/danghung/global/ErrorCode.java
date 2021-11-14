@@ -35,6 +35,8 @@ public class ErrorCode {
     // order error 650-659
     public static final int ORDER_USER_CREATE = 650;
     public static final int ORDER_USER_ALL = 651;
+    public static final int ORDER_CONFIRM = 652;
+    public static final int ORDER_REJECT = 653;
     ///////////////////////////////////////////////////
     // admin error
     public static final int ADMIN_BLOCK_USER = 660;

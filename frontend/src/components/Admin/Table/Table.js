@@ -1,12 +1,8 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import './table.css'
 
 const Table = props => {
-
-    const initDataShow = props.limit && props.bodyData ? props.bodyData.slice(0, Number(props.limit)) : props.bodyData
-
-    const [dataShow, setDataShow] = useState(initDataShow)
 
     let pages = 1
 
@@ -23,12 +19,8 @@ const Table = props => {
     const selectPage = page => {
         const start = Number(props.limit) * page
         const end = start + Number(props.limit)
-
-        setDataShow(props.bodyData.slice(start, end))
-
         setCurrPage(page)
     }
-
     return (
         <div>
             <div className="table-wrapper">
@@ -36,20 +28,24 @@ const Table = props => {
                     {
                         props.headData && props.renderHead ? (
                             <thead>
-                                <tr>
-                                    {
-                                        props.headData.map((item, index) => props.renderHead(item, index))
-                                    }
-                                </tr>
+                            <tr>
+                                {
+                                    props.headData.map((item, index) => props.renderHead(item, index))
+                                }
+                            </tr>
                             </thead>
                         ) : null
                     }
                     {
-                        props.bodyData && props.renderBody ? (
+                        props.bodyData ? (
                             <tbody>
-                                {
-                                    dataShow.map((item, index) => props.renderBody(item, index + (currPage)*10))
-                                }
+                            {
+                                props.bodyData.map((item, index) => {
+                                    if(index < (currPage+1) *10 && index >= (currPage)*10){
+                                        return props.renderBody(item, index+1)
+                                    }
+                                })
+                            }
                             </tbody>
                         ) : null
                     }
@@ -60,7 +56,9 @@ const Table = props => {
                     <div className="table__pagination">
                         {
                             range.map((item, index) => (
-                                <div key={index} className={`table__pagination-item ${currPage === index ? 'active' : ''}`} onClick={() => selectPage(index)}>
+                                <div key={index}
+                                     className={`table__pagination-item ${currPage === index ? 'active' : ''}`}
+                                     onClick={() => selectPage(index)}>
                                     {item + 1}
                                 </div>
                             ))

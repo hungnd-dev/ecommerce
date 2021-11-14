@@ -1,14 +1,23 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import './Product.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faEye, faHeart } from "@fortawesome/free-solid-svg-icons";
+import '../../../App.css'
+import '../../../assets/css/index.css'
+import '../../../assets/css/grid.css'
+import '../../../assets/boxicons-2.0.7/css/boxicons.min.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCartPlus, faEye} from "@fortawesome/free-solid-svg-icons";
+import {CartContext} from "../../../context/CartContext";
+import {useHistory} from "react-router-dom";
 
 export default function ProductOverlay(props) {
+    const history = useHistory()
+    const cartContext = useContext(CartContext)
     const [loading, setLoading] = useState(0)
 
     // const {addToCart, addToWishList} = useContext(CartContext)
-    const addToCart = ()=>{
-
+    const addToCart = (product) => {
+        cartContext.addToCart(product.id)
+        // cartContext.setCartOpen(true)
     }
 
     const cartClick = () => {
@@ -21,7 +30,7 @@ export default function ProductOverlay(props) {
 
     const redirect = (event) => {
         if (event.target.id === "overlay") {
-            props.history.push(`/product/${props.product.productID}`);
+            history.push(`/product/${props.product.id}`);
         }
     }
 
@@ -33,10 +42,7 @@ export default function ProductOverlay(props) {
                     <div className="loading-icon">
                     </div>
                 }
-                { loading !== 1 &&  <FontAwesomeIcon icon={faCartPlus} style={{marginRight: '3px'}}/> }
-            </div>
-            <div className="product-icon-box flex-center icon-view btn-product" onClick={props.openView}>
-                <FontAwesomeIcon icon={faEye}/>
+                {loading !== 1 && <FontAwesomeIcon icon={faCartPlus} style={{marginRight: '3px'}}/>}
             </div>
         </div>
     )

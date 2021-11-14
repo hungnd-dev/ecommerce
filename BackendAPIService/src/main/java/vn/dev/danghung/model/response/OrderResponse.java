@@ -3,6 +3,7 @@ package vn.dev.danghung.model.response;
 public class OrderResponse {
     private int id;
     private UserResponse user;
+    private String name;
     private String address;
     private String deliveryType;
     private String phoneReceive;
@@ -11,6 +12,14 @@ public class OrderResponse {
     private int state;
 
     public OrderResponse() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

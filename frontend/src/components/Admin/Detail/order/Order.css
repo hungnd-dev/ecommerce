@@ -1,12 +1,15 @@
-.confirm{
+.confirm {
     font-size: 14px;
 }
-.confirm:hover{
+
+.confirm:hover {
     background-color: #5cb85c;
 }
-.reject{
+
+.reject {
     font-size: 14px;
 }
-.reject:hover{
+
+.reject:hover {
     background-color: #d9534f;
 }

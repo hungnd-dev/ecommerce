@@ -16,6 +16,7 @@ public class OrderAdapter implements EntitiesAdapter<Order, OrderResponse> {
     @Override
     public OrderResponse transform(Order order) throws CommonException {
         OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setName(order.getName());
         orderResponse.setAddress(order.getAddress());
         orderResponse.setAmount(order.getAmount());
         orderResponse.setCreateAt(DateTimeUtils.generateTime(order.getCreateAt()));

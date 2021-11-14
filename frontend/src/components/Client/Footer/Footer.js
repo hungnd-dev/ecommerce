@@ -1,10 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faTwitter, faInstagram, faPinterest, faGoogle } from '@fortawesome/free-brands-svg-icons';
-// import { Link } from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faFacebookF, faGoogle, faInstagram, faPinterest, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import './Footer.css'
-import {Link} from "@material-ui/core";
-
 
 
 export default function Footer() {
@@ -18,11 +15,11 @@ export default function Footer() {
                 <div className="footer-right">
                     <a to="/contact">Contact us</a>
                     {/*add link to contact*/}
-                    <FontAwesomeIcon icon={faTwitter} className="cart-icon-footer" />
-                    <FontAwesomeIcon icon={faFacebookF} className="cart-icon-footer" />
-                    <FontAwesomeIcon icon={faInstagram} className="cart-icon-footer" />
-                    <FontAwesomeIcon icon={faPinterest} className="cart-icon-footer" />
-                    <FontAwesomeIcon icon={faGoogle} className="cart-icon-footer" />
+                    <FontAwesomeIcon icon={faTwitter} className="cart-icon-footer"/>
+                    <FontAwesomeIcon icon={faFacebookF} className="cart-icon-footer"/>
+                    <FontAwesomeIcon icon={faInstagram} className="cart-icon-footer"/>
+                    <FontAwesomeIcon icon={faPinterest} className="cart-icon-footer"/>
+                    <FontAwesomeIcon icon={faGoogle} className="cart-icon-footer"/>
                 </div>
             </div>
         </div>

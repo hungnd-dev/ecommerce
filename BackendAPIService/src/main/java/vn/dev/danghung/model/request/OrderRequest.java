@@ -1,11 +1,20 @@
 package vn.dev.danghung.model.request;
 
 public class OrderRequest {
+    private String name;
     private String address;
     private String deliveryType;
     private String phoneReceive;
 
     public OrderRequest() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {

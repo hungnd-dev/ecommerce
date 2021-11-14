@@ -1,0 +1,34 @@
+.Order{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    padding: 20px;
+    height: 100vh;
+    z-index: 99;
+    background-color: white;
+    overflow: scroll;
+    transition: all .3s ease-in;
+}
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 75px;
+    align-items: center;
+    margin-bottom: 100px;
+    border-bottom: 2px solid #eee;
+}
+
+.order-header__title {
+    font-size: 32px;
+    font-family: sans-serif;
+    font-weight: 400;
+}
+
+.order-header__close {
+    font-size: 24px;
+    cursor: pointer;
+}
+.option-font{
+    font-weight: 500;
+}

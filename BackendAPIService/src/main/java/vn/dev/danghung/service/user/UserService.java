@@ -17,5 +17,9 @@ public interface UserService {
 
     Object viewAllOrder(User user) throws Exception;
 
+    Object confirmOrder(User user, Integer orderId) throws Exception;
+
+    Object rejectOrder(User user, Integer orderId) throws Exception;
+
     Object changeInfoUser(User user, UserRequest userRequest) throws Exception;
 }

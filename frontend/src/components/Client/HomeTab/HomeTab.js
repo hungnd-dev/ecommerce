@@ -1,7 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import './HomeTab.css'
+import '../../../App.css'
+import '../../../assets/css/index.css'
+import '../../../assets/css/grid.css'
+import '../../../assets/boxicons-2.0.7/css/boxicons.min.css'
 import HomeTabContent from "./HomeTabContent";
-import axios from "axios";
 import {ProductContext} from "../../../context/ProductContext";
 
 export default function HomeTab() {
@@ -11,13 +14,13 @@ export default function HomeTab() {
     const [saleProduct, setSaleProduct] = useState([]);
     const [dateProduct, setDateProduct] = useState([]);
     const [sellProduct, setSellProduct] = useState([]);
-    const [isLoading,setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     let sellHeight = 550;
     let dateHeight = 550;
     let saleHeight = 550;
     ///get product
 
-    if(isLoading === true){
+    if (isLoading === true) {
         if (products.length) {
             products.sort((a, b) => (a.sale > b.sale) ? 1 : -1)
             setSaleProduct([...products])
@@ -45,8 +48,6 @@ export default function HomeTab() {
                 sellHeight = 260;
             }
         }
-        console.log("product list get in HomeTab")
-        console.log(sellProduct)
         setIsLoading(false)
     }
     return (

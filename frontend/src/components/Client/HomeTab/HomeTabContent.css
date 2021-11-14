@@ -4,15 +4,15 @@
     margin-bottom: 20px;
 }
 
-.home-tab-content-nothing{
+.home-tab-content-nothing {
     text-align: center;
     width: 100%;
     text-transform: capitalize;
-    margin-top:150px;
+    margin-top: 150px;
 }
 
 .tab-loadmore {
-    margin-bottom:  45px;
+    margin-bottom: 45px;
     margin-top: 20px;
     position: relative;
 }
@@ -32,6 +32,7 @@
 .tab-loadmore-loading {
     position: absolute;
 }
+
 .btn-nothover {
     background-color: #232323 !important;
     color: #fff !important;
@@ -39,6 +40,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .loading-icon {
     border: 3px solid #343434;
     border-radius: 50%;
@@ -49,6 +51,7 @@
     height: 10px;
     animation: spin 1.5s linear infinite;
 }
+
 .flex-center {
     display: flex;
     justify-content: center;

@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Table from "../../Table/Table";
+import './Category.css'
+import '../../../../assets/css/index.css'
+import '../../../../assets/css/grid.css'
 import CreateCategory from "./CreateCategory";
+import {ToastCustomContext} from "../../../../context/ToastContext";
 
-export default function Categories(){
-    const [create,setCreate] = useState(false);
-    const [isLoading,setIsLoading] = useState(true);
+export default function Categories() {
+    const toast = useContext(ToastCustomContext)
+    const [create, setCreate] = useState(false);
     const categoriesTableHead = [
         '',
         'name',
@@ -17,31 +21,24 @@ export default function Categories(){
             <td>{item.name}</td>
         </tr>
     )
-    const [category,setCategory] = useState([]);
-    useEffect(()=>{
+    const [category, setCategory] = useState([]);
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:10399/brand/all",
-        }).then(res =>{
+            method: "get",
+            url: "http://localhost:10399/brand/all",
+        }).then(res => {
             setCategory(res.data.data)
-            setIsLoading(false)
         })
-            .catch(err =>{
-                alert(err)
+            .catch(err => {
+                toast.showToast(err.message,"error")
             })
 
-    },[])
+    }, [])
 
-    if(isLoading){
-        return <div>
-
-        </div>
-    }
-
-    const openCreateProduct = ()=>{
+    const openCreateProduct = () => {
         setCreate(true);
     }
-    return(
+    return (
         <div>
             <h1 className="page-header">
                 Products
@@ -57,7 +54,7 @@ export default function Categories(){
                         <div className="card__body">
                             {
                                 create ?
-                                    <CreateCategory create={create} setCreate={setCreate} /> :
+                                    <CreateCategory create={create} setCreate={setCreate}/> :
                                     <Table
                                         limit='10'
                                         headData={categoriesTableHead}

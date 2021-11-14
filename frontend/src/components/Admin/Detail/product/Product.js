@@ -1,14 +1,17 @@
 import './Product.css'
-import {useHistory} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import '../../../../assets/css/index.css'
+import '../../../../assets/css/grid.css'
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Table from "../../Table/Table";
 import CreateProduct from "./CreateProduct";
-export default function Product(){
-    const [create,setCreate] = useState(false);
-    const history = useHistory();
-    let token = "Bearer ".concat(localStorage.getItem("tokenAdmin"))
-    const [isLoading,setIsLoading] = useState(true);
+import {ToastCustomContext} from "../../../../context/ToastContext";
+import {GlobalContext} from "../../../../context/GlobalContext";
+
+export default function Product() {
+    const toast = useContext(ToastCustomContext)
+    const global = useContext(GlobalContext)
+    const [create, setCreate] = useState(false);
     const productTableHead = [
         '',
         'name',
@@ -24,7 +27,7 @@ export default function Product(){
         <tr key={index}>
             <td>{index}</td>
             <td>{item.name}</td>
-            <td>{item.price}</td>
+            <td>{global.convert(item.price)}</td>
             <td>{item.quantity}</td>
             <td><img src={item.images} alt={item.name} className="img-product"/></td>
             <td>{item.brandName}</td>
@@ -32,30 +35,25 @@ export default function Product(){
             <td>{item.ssd}</td>
         </tr>
     )
-    const [product,setProduct] = useState([]);
-//get customer
-    useEffect(()=>{
+    const [product, setProduct] = useState([]);
+    //get product
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:10399/product/all",
-        }).then(res =>{
+            method: "get",
+            url: "http://localhost:10399/product/all",
+        }).then(res => {
             setProduct(res.data.data)
-            setIsLoading(false)
         })
-            .catch(err =>{
-                alert(err)
+            .catch(err => {
+                toast.showToast(err.message,"error")
             })
 
-    },[])
+    }, [])
 
-    if(isLoading){
-        return <div></div>
-    }
-
-    const openCreateProduct = ()=>{
+    const openCreateProduct = () => {
         setCreate(true);
     }
-    return(
+    return (
         <div>
             <h1 className="page-header">
                 Products
@@ -71,7 +69,7 @@ export default function Product(){
                         <div className="card__body">
                             {
                                 create ?
-                                    <CreateProduct create={create} setCreate={setCreate} /> :
+                                    <CreateProduct create={create} setCreate={setCreate}/> :
                                     <Table
                                         limit='10'
                                         headData={productTableHead}

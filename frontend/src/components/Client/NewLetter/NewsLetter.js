@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import './NewsLetter.css'
-export default function Newsletter () {
+
+export default function Newsletter() {
 
     const inputEmailRef = useRef();
     const [emailInput, setEmailInput] = useState("");
@@ -13,7 +14,7 @@ export default function Newsletter () {
     }
 
 
-    return(
+    return (
         <div className="Newsletter">
             <div className="newsletter-container">
                 <div className="newsletter-title flex-center">NewsLetter</div>

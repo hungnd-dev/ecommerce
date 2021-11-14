@@ -6,11 +6,13 @@
     border-bottom: 1px solid #eee;
     padding: 20px 0;
 }
+
 .field {
     font-size: 24px;
-    font-weight: 400px;
+    font-weight: 400;
     justify-self: start;
 }
+
 .item {
     justify-self: start;
     align-self: center;
@@ -26,13 +28,16 @@
     font-size: 1em;
     text-align: center;
 }
+
 .counter {
     display: flex;
     align-items: center;
 }
-.down,.up {
+
+.down, .up {
     margin: 0 10px;
 }
+
 .down:hover, .up:hover {
     cursor: pointer;
 }

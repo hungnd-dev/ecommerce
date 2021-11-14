@@ -15,6 +15,8 @@ public class Order {
     @Column(name = "cart_id")
     private int cartId;
 
+    @Column(name = "name")
+    private String name;
     @Column(name = "address")
     private String address;
 
@@ -36,6 +38,14 @@ public class Order {
 
 
     public Order() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

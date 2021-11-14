@@ -1,42 +1,44 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import '../../../../assets/css/index.css'
 import '../../../../assets/css/grid.css'
 import Table from "../../Table/Table";
 import {useHistory} from "react-router-dom";
 import './Customer.css'
+import {ToastCustomContext} from "../../../../context/ToastContext";
 export default function Customer() {
-
+    const toast = useContext(ToastCustomContext)
     const history = useHistory();
-    let token = "Bearer ".concat(localStorage.getItem("tokenAdmin"))
-    const [isLoading,setIsLoading] = useState(true);
-    const handleOnBlock = (e)=>{
-        axios.get("http://localhost:10399/admin/manage/user/block?username="+e,{headers:{Authorization:token}})
-            .then(res=>{
-                if(res.data.code===200){
+    let token = "Bearer ".concat(localStorage.getItem("token_admin"))
+    const handleOnBlock = (e) => {
+        axios.get("http://localhost:10399/admin/manage/user/block?username=" + e, {headers: {Authorization: token}})
+            .then(res => {
+                if (res.data.code === 200) {
+                    toast.showToast("Block successfully","success")
                     window.location.reload()
                 }
             })
-            .catch(err =>{
-                alert(err.message)
+            .catch(err => {
+                toast.showToast(err.message,"error")
                 history.push("/admin")
             })
 
     }
-    const handleOnUnblock = (e)=>{
-        axios.get("http://localhost:10399/admin/manage/user/unblock?username="+e,{headers:{Authorization:token}})
-            .then(res=>{
-                if(res.data.code===200){
+    const handleOnUnblock = (e) => {
+        axios.get("http://localhost:10399/admin/manage/user/unblock?username=" + e, {headers: {Authorization: token}})
+            .then(res => {
+                if (res.data.code === 200) {
+                    toast.showToast("Unblock successfully","success")
                     window.location.reload()
                 }
             })
-            .catch(err =>{
-                alert(err.message)
+            .catch(err => {
+                toast.showToast(err.message,"error")
                 history.push("/admin")
             })
 
     }
-
+    //table head -> fields to display
     const customerTableHead = [
         '',
         'username',
@@ -46,6 +48,7 @@ export default function Customer() {
         'block'
     ]
     const renderHead = (item, index) => <th key={index}>{item}</th>
+    //how to render body?? expose it here
     const renderBody = (item, index) => (
         <tr key={index}>
             <td>{index}</td>
@@ -57,37 +60,31 @@ export default function Customer() {
             <td className="column-block">
                 {
                     item.state ?
-                        <div className="column-block" onClick={()=>handleOnBlock(item.username)}>Block</div>:
-                        <div className="column-block" onClick={()=>handleOnUnblock(item.username)}>Unblock</div>
+                        <div className="column-block" onClick={() => handleOnBlock(item.username)}>Block</div> :
+                        <div className="column-block" onClick={() => handleOnUnblock(item.username)}>Unblock</div>
                 }
             </td>
         </tr>
     )
-    const [customer,setCustomer] = useState([]);
-//get customer
-    useEffect(()=>{
+    const [customer, setCustomer] = useState([]);
+    //get customer from api
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:10399/admin/manage/user/view/",
-            headers:{
+            method: "get",
+            url: "http://localhost:10399/admin/manage/user/view/",
+            headers: {
                 "Authorization": token
             }
-        }).then(res =>{
+        }).then(res => {
             setCustomer(res.data.data)
-            setIsLoading(false)
         })
-            .catch(err =>{
-                alert(err)
+            .catch(err => {
+                toast.showToast(err.message,"error")
             })
 
-    },[])
+    }, [])
 
-    if(isLoading){
-        return <div>
-
-        </div>
-    }
-    return(
+    return (
         <div>
             <h2 className="page-header">
                 customers

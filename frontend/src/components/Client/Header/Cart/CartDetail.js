@@ -1,63 +1,60 @@
-// import React, {useContext} from 'react'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-// import { CartContext } from '../../contexts/Cart';
-// import './CartItem.css'
-// import '../../App.css'
-//
-// export default function CartDetail(props) {
-//     const {cartItems, minusCount, plusCount, removeFromCart, updateCount} = useContext(CartContext)
-//
-//     const convert = (number) => {
-//         return number.toLocaleString('vi-VN', {
-//             style: 'currency',
-//             currency: 'VND'
-//         })
-//     }
-//
-//     return (
-//         <div className="cart-list">
-//             <div className="container">
-//                 <div className="field">Image</div>
-//                 <div className="field">Name</div>
-//                 <div className="field">Amount</div>
-//                 <div className="field">Price</div>
-//                 <div className="field">Total Price</div>
-//                 <div className="field">Remove</div>
-//
-//             </div>
-//             {
-//                 cartItems.map((item, index) => {
-//                     return (
-//                         <div className="container" key={index}>
-//                             <div className="item">
-//                                 {
-//                                     item.productImg &&
-//                                     <img src={item.productImg} width="100%"></img>
-//                                 }
-//                             </div>
-//                             <div className="item">{item.productName}</div>
-//                             <div className="item counter">
-//                                 <div className="down" id={item.productID} onClick={minusCount}>
-//                                     <FontAwesomeIcon  style={{pointerEvents: 'none'}} icon={faMinus}/>
-//                                 </div>
-//                                 <input className="count" type="text" value={item.count} id={item.productID} onChange={updateCount}/>
-//                                 <div className="up" id={item.productID} onClick={plusCount}>
-//                                     <FontAwesomeIcon  style={{pointerEvents: 'none'}} icon={faPlus}/>
-//                                 </div>
-//                             </div>
-//                             <div className="item">{convert(item.productPrice)}</div>
-//                             <div className="item">{convert(item.count*item.productPrice)}</div>
-//                             <div className="item trash" id={item.productID} onClick={removeFromCart}>
-//
-//                                 <FontAwesomeIcon  style={{pointerEvents: 'none'}} icon={faTrash}/>
-//                             </div>
-//
-//                         </div>
-//                     )
-//                 })
-//             }
-//         </div>
-//
-//     )
-// }
+import React, {useContext, useEffect, useState} from 'react'
+import './CartDetail.css'
+import Table from "../../../Admin/Table/Table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {CartContext} from "../../../../context/CartContext";
+
+export default function CartDetail(props) {
+    const cart = useContext(CartContext)
+    const addToCart = (product)=>{
+        cart.addToCart(product.id)
+    }
+    const reduceCart = (product)=>{
+        cart.reduceCart(product.id)
+    }
+    const detailTableHead = [
+        '',
+        'name',
+        'price',
+        'quantity',
+        'images',
+        'total'
+    ]
+    const renderHead = (item, index) => <th key={index}>{item}</th>
+    const renderBody = (item, index) => (
+        <tr key={index}>
+            <td>{index}</td>
+            <td>{item.name}</td>
+            <td>{props.convert(item.price)}</td>
+            <td>
+                <i onClick={()=> reduceCart(item)}><FontAwesomeIcon  style={{pointerEvents: 'none', marginRight:'10px'}} icon={faMinus} /></i>
+                {item.quantity}
+                <i onClick={()=>addToCart(item)}><FontAwesomeIcon  style={{pointerEvents: 'none',marginLeft:'10px'}} icon={faPlus} /></i>
+            </td>
+            <td><img src={item.image} alt={item.name} className="img-product"/></td>
+            <td>{props.convert(item.total)}</td>
+        </tr>
+    )
+    return (
+        <div>
+            <div className="row">
+                <div className="col-12">
+                    <div className="card">
+                        <div className="card__body">
+                            {
+                                <Table
+                                    limit='10'
+                                    headData={detailTableHead}
+                                    renderHead={(item, index) => renderHead(item, index)}
+                                    bodyData={props.detail}
+                                    renderBody={(item, index) => renderBody(item, index)}
+                                />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

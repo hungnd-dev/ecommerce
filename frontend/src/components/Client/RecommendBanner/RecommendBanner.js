@@ -1,10 +1,10 @@
 import React from 'react';
 import './RecommendBanner.css';
-// import '../../App.css';
 import b1 from '../../../assets/images/b1.jpg';
 import b2 from '../../../assets/images/b2.jpg';
 import b3 from '../../../assets/images/b3.jpg';
 import b4 from '../../../assets/images/b4.jpg';
+
 export default function RecommendBanner() {
     const handleClick = () => {
         window.scrollTo(0, 0);
@@ -70,12 +70,12 @@ export default function RecommendBanner() {
                         <div className="blackbox-center-container">
                             <div className="blackbox-title blackbox-title-medium">Dell</div>
                             <div className="blackbox-center">
-                                    <a
-                                        className="blackbox-link a"
-                                        href="/product"
-                                        onClick={handleClick}
-                                    >Shop now
-                                    </a>
+                                <a
+                                    className="blackbox-link a"
+                                    href="/product"
+                                    onClick={handleClick}
+                                >Shop now
+                                </a>
                             </div>
                         </div>
                     </div>

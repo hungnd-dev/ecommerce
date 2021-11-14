@@ -8,7 +8,8 @@ import Categories from "../Detail/categories/Categories";
 import Discount from "../Detail/discount/Discount";
 import Profile from "../Detail/profile/Profile";
 import Setting from "../Detail/setting/Setting";
-export default function RoutesAdmin(){
+
+export default function RoutesAdmin() {
     return (
         <Switch>
             <Route path='/admin' exact component={Dashboard}/>

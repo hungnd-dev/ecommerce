@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import './ProductList.css';
+import '../../../App.css'
+import '../../../assets/css/index.css'
+import '../../../assets/css/grid.css'
+import '../../../assets/boxicons-2.0.7/css/boxicons.min.css'
 import Product from "../Product/Product";
 
 export default function ProductList(props) {
-    const [limit, setLimit] = useState(8)//10 san pham toi da
+    const [limit, setLimit] = useState(8)
     const [loading, setLoading] = useState(false)
     const products = props.products
     const height = props.height
@@ -18,9 +22,9 @@ export default function ProductList(props) {
 
     const limitProducts = products.slice(0, limit)
 
-    return(
+    return (
         <div>
-            <div className="best-seller" style= {{minHeight: `${height}px`}}>
+            <div className="best-seller" style={{minHeight: `${height}px`}}>
                 {
                     limitProducts.map((item, index) => {
                         return (

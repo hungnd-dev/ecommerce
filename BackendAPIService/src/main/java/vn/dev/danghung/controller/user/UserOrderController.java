@@ -38,9 +38,10 @@ public class UserOrderController extends BaseController {
     public Response createOrder(
             HttpServletRequest request,
             HttpServletResponse response,
+            @RequestParam("name") String name,
             @RequestParam("address") String address,
-            @RequestParam("delivery_type") String deliveryType,
-            @RequestParam("phone_receive") String phoneReceive
+            @RequestParam("delivery") String deliveryType,
+            @RequestParam("phone") String phoneReceive
     ){
         StopWatch sw = new StopWatch();
         String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
@@ -49,6 +50,7 @@ public class UserOrderController extends BaseController {
         Response svResponse = null;
         try{
             OrderRequest orderRequest = new OrderRequest();
+            orderRequest.setName(name);
             orderRequest.setAddress(address);
             orderRequest.setDeliveryType(deliveryType);
             orderRequest.setPhoneReceive(phoneReceive);
@@ -94,6 +96,72 @@ public class UserOrderController extends BaseController {
             User user = super.getUserByToken(request);
             super.checkUserState(user);
             serviceReponse = userService.viewAllOrder(user);
+            svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
+        } catch (RoleException r) {
+            message = r.getMessage();
+            int code = r.getCode();
+            svResponse = buildResponse(code, StatusCode.FAILURE, message, serviceReponse);
+        }
+        catch (CommonException c){
+            message = c.getMessage();
+            int code = c.getCode();
+            svResponse = buildResponse(code, StatusCode.FAILURE,message,serviceReponse);
+        } catch(Exception e) {
+            message = "an error occurred";
+            svResponse = buildResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), StatusCode.FAILURE,message,serviceReponse);
+        }
+        requestLogger.info("finish request {} in {}", requestUri,sw.stop());
+        return svResponse;
+    }
+
+    @GetMapping("/user/order/confirm")
+    public Response confirmOrder(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam("order_id") Integer orderId
+    ){
+        StopWatch sw = new StopWatch();
+        String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
+        String message = "Request complete";
+        Object serviceReponse = null;
+        Response svResponse = null;
+        try{
+            User user = super.getUserByToken(request);
+            super.checkUserState(user);
+            serviceReponse = userService.confirmOrder(user, orderId);
+            svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
+        } catch (RoleException r) {
+            message = r.getMessage();
+            int code = r.getCode();
+            svResponse = buildResponse(code, StatusCode.FAILURE, message, serviceReponse);
+        }
+        catch (CommonException c){
+            message = c.getMessage();
+            int code = c.getCode();
+            svResponse = buildResponse(code, StatusCode.FAILURE,message,serviceReponse);
+        } catch(Exception e) {
+            message = "an error occurred";
+            svResponse = buildResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), StatusCode.FAILURE,message,serviceReponse);
+        }
+        requestLogger.info("finish request {} in {}", requestUri,sw.stop());
+        return svResponse;
+    }
+
+    @GetMapping("/user/order/reject")
+    public Response rejectOrder(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam("order_id") Integer orderId
+    ){
+        StopWatch sw = new StopWatch();
+        String requestUri = request.getRequestURI() + "?" + getRequestParams(request);
+        String message = "Request complete";
+        Object serviceReponse = null;
+        Response svResponse = null;
+        try{
+            User user = super.getUserByToken(request);
+            super.checkUserState(user);
+            serviceReponse = userService.rejectOrder(user, orderId);
             svResponse = buildResponse(HttpStatus.OK.value(), StatusCode.SUCCESS,message,serviceReponse);
         } catch (RoleException r) {
             message = r.getMessage();

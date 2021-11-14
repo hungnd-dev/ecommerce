@@ -1,36 +1,47 @@
 import {useContext, useEffect, useState} from "react";
 import "./ProductFilter.css";
+import '../../../App.css'
+import '../../../assets/css/index.css'
+import '../../../assets/css/grid.css'
+import '../../../assets/boxicons-2.0.7/css/boxicons.min.css'
 import ProductList from "./ProductList";
 import {ProductContext} from "../../../context/ProductContext";
 
 export default function ProductFilter() {
     const {products} = useContext(ProductContext)
+    //get all type of filter to show and filter
     const filterBrandList = [...new Set(products.map(e => e.brandName))]
-    const filterRamList = [...new Set(products.map(e => e.ram))]
+    const filterRamList = [...new Set(products.map(e => e.ram + " GB"))]
     const filterCpuList = [...new Set(products.map(e => e.cpu))]
-    const filterSsdList = [...new Set(products.map(e => e.ssd))]
+    const filterSsdList = [...new Set(products.map(e => {
+        if (e.ssd != 1) {
+            return e.ssd + " GB";
+        } else {
+            return e.ssd + " TB";
+        }
+    }))]
 
+    //list of product after filter
     const [filteredList, setFilteredList] = useState(products)
-    const [filterflow, setFilterflow] = useState([])
+
     const [activeFilter, setActiveFilter] = useState([])
 
     const onFilterChange = (filterIndex) => {
         let newActiveFilter
         if (activeFilter.includes(filterIndex)) {
             let index = activeFilter.indexOf(filterIndex);
-            console.log(index)
             newActiveFilter = [...activeFilter]
             newActiveFilter.splice(index, 1)
         } else {
             newActiveFilter = [...activeFilter]
             newActiveFilter.push(filterIndex)
         }
-        if (typeof newActiveFilter === 'number') {
-            // setActiveFilter(new Array(newActiveFilter))
-        } else {
-            setActiveFilter(newActiveFilter)
-        }
-
+        // if (typeof newActiveFilter === 'number') {
+        //     // setActiveFilter(new Array(newActiveFilter))
+        // } else {
+        //     setActiveFilter(newActiveFilter)
+        // }
+        setActiveFilter(newActiveFilter)
     }
 
     const checkFilter = (filterIndex) => {
@@ -45,7 +56,7 @@ export default function ProductFilter() {
         let newFilteredList = []
         let allProductList = products
         let tempFilterList = []
-        if(activeFilter.length > 0 ) {
+        if (activeFilter.length > 0) {
             activeFilter.forEach(activeFilter => {
                 if (activeFilter >= 0 && activeFilter < 100) {
                     tempFilterList = allProductList.filter(e => (
@@ -54,27 +65,31 @@ export default function ProductFilter() {
                 }
                 if (activeFilter >= 100 && activeFilter < 200) {
                     tempFilterList = allProductList.filter(e => (
-                        e.ram === filterRamList[activeFilter-100]
+                        e.ram+" GB" === filterRamList[activeFilter - 100]
                     ))
                 }
                 if (activeFilter >= 200 && activeFilter < 300) {
-                    tempFilterList = allProductList.filter(e => (
-                        e.ssd === filterSsdList[activeFilter-200]
-                    ))
+                    tempFilterList = allProductList.filter(e => {
+                        if(e.ssd === 1){
+                            return e.ssd+" TB" === filterSsdList[activeFilter - 200]
+                        }else{
+                            return e.ssd+" GB" === filterSsdList[activeFilter - 200]
+                        }
+                    })
                 }
                 if (activeFilter >= 300 && activeFilter < 400) {
                     tempFilterList = allProductList.filter(e => (
-                        e.cpu === filterCpuList[activeFilter-300]
+                        e.cpu === filterCpuList[activeFilter - 300]
                     ))
                 }
-                tempFilterList.forEach(e=>{
-                    if(!newFilteredList.includes(e)){
+                tempFilterList.forEach(e => {
+                    if (!newFilteredList.includes(e)) {
                         newFilteredList.push(e)
                     }
                 })
             })
             setFilteredList(newFilteredList)
-        }else{
+        } else {
             setFilteredList(allProductList)
         }
 
@@ -162,9 +177,12 @@ export default function ProductFilter() {
                         <div className="product-filter-header-setflex">
                             <span className="span-title">Lọc theo:</span>
                             {
-                                filterflow.map((filter, index) => (
+                                activeFilter.map((filter, index) => (
                                     <span className="span-title span-title-filterflow" key={index}>
-                                        {filter.brandName}{filter.ramName}{filter.ssdName}{filter.priceName}{filter.cpuName}
+                                        {filterBrandList[filter]}
+                                        {filterRamList[filter - 100]}
+                                        {filterSsdList[filter - 200]}
+                                        {filterCpuList[filter - 300]}
                                     </span>
                                 ))
                             }

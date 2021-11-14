@@ -1,27 +1,32 @@
-.Product-Filter{
+.Product-Filter {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 30px;
     background-color: #f8f9fa;
     padding-top: 3%;
 }
-.col-3{
+
+.col-3 {
     -webkit-box-flex: 0;
     flex: 0 0 25%;
     max-width: 25%;
 }
-.col-9{
+
+.col-9 {
     -webkit-box-flex: 0;
     flex: 0 0 75%;
     max-width: 75%;
 }
-.p-0{
+
+.p-0 {
     padding: 0;
 }
-.p-r-30{
+
+.p-r-30 {
     padding-left: 3%;
 }
-.filter-title{
+
+.filter-title {
     text-align: left;
     font-size: 15px;
     font-weight: 650;
@@ -29,7 +34,8 @@
     color: #23232c;
     margin-bottom: 21px;
 }
-.filter-list{
+
+.filter-list {
     display: flex;
     -webkit-box-align: start;
     align-items: flex-start;
@@ -39,18 +45,21 @@
     margin-bottom: -14px;
     max-width: 100%;
 }
-.filter-items{
+
+.filter-items {
     display: flex;
     align-items: center;
     width: 50%;
 }
-.filter-items-cpu{
+
+.filter-items-cpu {
     display: flex;
     align-items: center;
-    width: 60%;
-
+    width: 100%;
+    margin-top: 5px;
 }
-.label-filter{
+
+.label-filter {
     cursor: pointer;
     font-size: 15px;
     font-weight: 400;
@@ -58,7 +67,8 @@
     display: inline-block;
     text-transform: capitalize;
 }
-.input-filter{
+
+.input-filter {
     display: flex;
     width: 16px;
     height: 16px;
@@ -68,11 +78,13 @@
     margin-right: 10px;
     position: relative;
 }
-.show-product{
+
+.show-product {
     background: #f8f9fa;
     display: block;
 }
-.product-filter-header{
+
+.product-filter-header {
     position: relative;
     display: flex;
     -webkit-box-orient: vertical;
@@ -86,13 +98,15 @@
     border-radius: 6px;
     margin-bottom: 30px;
 }
-.product-filter-header-title{
+
+.product-filter-header-title {
     padding: 15px;
     margin-bottom: 0;
     background-color: #fff;
     border-radius: 6px;
 }
-.product-filter-header-title-setfont{
+
+.product-filter-header-title-setfont {
     font-size: 28px;
     line-height: 28px;
     color: #212529;
@@ -100,18 +114,22 @@
     font-family: inherit;
     font-weight: 625;
 }
-.product-filter-header-setflex{
+
+.product-filter-header-setflex {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
 }
-.span-title{
+
+.span-title {
     display: inline-block;
     color: #6c757d;
     font-size: 18px;
     line-height: 1;
+    text-transform: capitalize;
 }
-.span-title-filterflow{
+
+.span-title-filterflow {
     display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-box-align: center;
@@ -127,7 +145,8 @@
     cursor: pointer;
     margin-left: 10px;
 }
-.product-filter-header-tag{
+
+.product-filter-header-tag {
     margin-top: -2px;
     padding: 0 15px 15px;
     overflow: hidden;

@@ -4,6 +4,7 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vn.dev.danghung.adapter.OrderAdapter;
 import vn.dev.danghung.adapter.UserAdapter;
 import vn.dev.danghung.dao.*;
 import vn.dev.danghung.entities.*;
@@ -12,6 +13,7 @@ import vn.dev.danghung.global.ErrorCode;
 import vn.dev.danghung.model.request.OrderRequest;
 import vn.dev.danghung.model.request.UserRequest;
 import vn.dev.danghung.model.response.CartDetailResponse;
+import vn.dev.danghung.model.response.OrderResponse;
 import vn.dev.danghung.model.response.ViewCartResponse;
 import vn.dev.danghung.policy.UserRule;
 import vn.dev.danghung.security.config.JwtTokenUtil;
@@ -49,6 +51,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Autowired
     @Qualifier("userAdapter")
     private UserAdapter userAdapter;
+    @Autowired
+    @Qualifier("orderAdapter")
+    private OrderAdapter orderAdapter;
 
     @Override
     public Object addToCart(User user, int productId) throws Exception {
@@ -71,7 +76,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             eLogger.error("error when add to cart, reason {}", e.getMessage());
             throw new CommonException("error when add to cart", ErrorCode.CART_ADD);
         }
-        return new ArrayList<>();
+        return overViewCart(user);
     }
 
     @Override
@@ -82,17 +87,22 @@ public class UserServiceImpl extends AbstractService implements UserService {
             if(cartDetail == null){
                 throw new CommonException("dont exist product in cart to reduce", ErrorCode.CART_REDUCE);
             }else{
-                cartDetail.setQuantity(cartDetail.getQuantity() - 1);
+                if(cartDetail.getQuantity() == 1){
+                    cartDetailRepo.delete(cartDetail);
+                }
+                else {
+                    cartDetail.setQuantity(cartDetail.getQuantity() - 1);
+                    cartDetailRepo.save(cartDetail);
+                }
             }
             double price = productRepo.findById(productId).get().getPrice();
             cart.setAmount(cart.getAmount() - price);
-            cartDetailRepo.save(cartDetail);
             cartRepo.save(cart);
         }catch (Exception e){
             eLogger.error("error when reduce product in cart, reason {}", e.getMessage());
             throw new CommonException("error when reduce product in cart", ErrorCode.CART_REDUCE);
         }
-        return new ArrayList<>();
+        return overViewCart(user);
     }
 
     @Override
@@ -113,6 +123,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             for(CartDetail cartDetail:cartDetails){
                 CartDetailResponse cartDetailResponse = new CartDetailResponse();
                 Product product = products.get(cartDetail.getProductId());
+                cartDetailResponse.setId(product.getId());
                 cartDetailResponse.setName(product.getName());
                 cartDetailResponse.setPrice(product.getPrice());
                 cartDetailResponse.setImage(product.getImages());
@@ -126,6 +137,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             throw new CommonException("error when view all product in cart", ErrorCode.CART_OVERVIEW);
         }
         ViewCartResponse viewCartResponse = new ViewCartResponse(cartDetailResponses,amount);
+        viewCartResponse.setProductCount(viewCartResponse.getDetail().size());
         return viewCartResponse;
     }
 
@@ -136,6 +148,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             Cart cart = cartRepo.findByUserIdIsAndOrderStateIs(user.getId(),0);
             order.setCartId(cart.getId());
             order.setUserId(user.getId());
+            order.setName(orderRequest.getName());
             order.setAddress(orderRequest.getAddress());
             order.setDeliveryType(orderRequest.getDeliveryType());
             order.setPhoneReceive(orderRequest.getPhoneReceive());
@@ -161,13 +174,18 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public Object viewAllOrder(User user) throws Exception {
         List<Order> orders = new ArrayList<>();
+        List<OrderResponse> orderResponses = new ArrayList<>();
         try{
             orders = orderRepo.findAllByUserId(user.getId());
+            for(Order order: orders){
+                OrderResponse orderResponse = orderAdapter.transform(order);
+                orderResponses.add(orderResponse);
+            }
         }catch (Exception e){
             eLogger.error("error when get all order, reason {}", e.getMessage());
             throw new CommonException("error when get all order", ErrorCode.ORDER_USER_ALL);
         }
-        return orders;
+        return orderResponses;
     }
 
     @Override
@@ -191,5 +209,33 @@ public class UserServiceImpl extends AbstractService implements UserService {
             throw new CommonException("error when change info user", ErrorCode.USER_CHANGE);
         }
         return userAdapter.transform(user);
+    }
+
+    @Override
+    public Object confirmOrder(User user, Integer orderId) throws Exception {
+        Order order = new Order();
+        try{
+            order = orderRepo.findByIdIsAndUserIdIs(orderId,user.getId());
+            order.setState(1);
+            orderRepo.save(order);
+        }catch (Exception e){
+            eLogger.error("error when confirm order, reason {}", e.getMessage());
+            throw new CommonException("error when confirm order", ErrorCode.ORDER_CONFIRM);
+        }
+        return order;
+    }
+
+    @Override
+    public Object rejectOrder(User user, Integer orderId) throws Exception {
+        Order order = new Order();
+        try{
+            order = orderRepo.findByIdIsAndUserIdIs(orderId,user.getId());
+            order.setState(1);
+            orderRepo.save(order);
+        }catch (Exception e){
+            eLogger.error("error when reject order, reason {}", e.getMessage());
+            throw new CommonException("error when reject order", ErrorCode.ORDER_REJECT);
+        }
+        return order;
     }
 }

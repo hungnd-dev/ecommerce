@@ -1,4 +1,4 @@
-.header{
+.header {
     position: absolute;
     height: 75px;
     top: 0;
@@ -11,22 +11,27 @@
     background: rgba(204, 204, 204, 0);
     transition: .4s ease-in-out;
 }
+
+
 .menu {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
 }
-.input{
+
+.input {
     height: 30px;
     font-size: 15px;
     width: 100%;
 }
-li{
+
+li {
     height: 75px;
     display: flex;
     align-items: center;
 }
+
 li a {
     position: relative;
     text-transform: uppercase;
@@ -35,9 +40,11 @@ li a {
     color: white;
     text-decoration: none;
 }
+
 li div {
     margin-left: 20px;
 }
+
 .header div:nth-child(1) li a::after {
     position: absolute;
     content: "";
@@ -49,24 +56,25 @@ li div {
     margin-top: 3px;
     transition: all .4s;
 }
+
 .header div:nth-child(1) li a:hover::after {
     width: 100%;
     left: 0;
 }
 
-.header:hover{
+.header:hover {
     background-color: #b0b0b0;
 }
 
-.header a:hover{
+.header a:hover {
     color: black;
 }
 
-.personal-icon,.wishlist-icon,.search-icon,.cart-icon{
+.personal-icon, .order-icon, .search-icon, .cart-icon {
     color: white;
 }
 
-.personal-icon:hover,.search-icon:hover,.cart-icon:hover,.wishlist-icon:hover{
+.personal-icon:hover, .search-icon:hover, .cart-icon:hover, .order-icon:hover {
     cursor: pointer;
     color: black
 }
@@ -76,6 +84,7 @@ li div {
     justify-content: center;
     align-items: center;
 }
-.flex{
+
+.flex {
     display: flex;
 }
